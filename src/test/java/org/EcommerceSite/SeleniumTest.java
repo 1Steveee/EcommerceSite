@@ -1,5 +1,6 @@
 package org.EcommerceSite;
 
+import org.EcommerceSite.pages.MainPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,6 +17,8 @@ public class SeleniumTest extends BaseTest {
 
     @Test
     public void testUserRegistration() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.registerAccount();
 
     }
 }
