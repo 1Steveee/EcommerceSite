@@ -6,7 +6,8 @@
         <classes>
             <class name="org.EcommerceSite.SeleniumTest">
                 <methods>
-
+                    <include name="testUserRegistration"/>
+                    <include name="testAddProductToCart"/>
                 </methods>
             </class>
         </classes>
