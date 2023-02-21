@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -23,10 +25,10 @@ public class MainPage {
         return driver.findElement(By.cssSelector(".mz-sub-menu-96 > li:nth-child(2) > a"));
     }
 
-    public void registerAccount() {
+    public void clickRegisterAccount() {
         Actions actions = new Actions(driver);
-
         actions.moveToElement(myAccountLink()).pause(Duration.ofSeconds(2))
-                .moveToElement(registerLink()).build().perform();
+                .click(registerLink()).build().perform();
+
     }
 }

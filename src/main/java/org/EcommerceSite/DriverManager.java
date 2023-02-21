@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.time.Duration;
+
 public class DriverManager {
 
     private WebDriver driver;
@@ -24,6 +26,7 @@ public class DriverManager {
             System.out.println("Browser should either be chrome, edge, or firefox.");
         }
 
+        setUpTimeOut();
         setUpFullScreen();
     }
 
@@ -47,5 +50,8 @@ public class DriverManager {
         driver.manage().window().maximize();
     }
 
+    private void setUpTimeOut() {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
 
 }
