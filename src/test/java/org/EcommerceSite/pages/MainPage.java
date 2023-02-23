@@ -4,8 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.time.Duration;
 
@@ -21,8 +20,16 @@ public class MainPage {
         return driver.findElement(By.cssSelector("#widget-navbar-217834 > ul > li:nth-child(6) > a"));
     }
 
+    private WebElement categoryItem(String category) {
+        return driver.findElement(By.linkText(category));
+    }
+
     private WebElement productSearchField() {
         return driver.findElement(By.name("search"));
+    }
+
+    private WebElement categoryDropdown() {
+        return driver.findElement(By.cssSelector(".search-category > button"));
     }
 
     private WebElement productLink() {
@@ -44,9 +51,14 @@ public class MainPage {
 
     }
 
-    public void navigateToProductPage(String productName) {
+    private void selectCategory(String category) {
+        categoryDropdown().click();
+        categoryItem(category).click();
+    }
+
+    public void searchForCategoryAndProduct(String category,String productName) {
+        selectCategory(category);
         productSearchField().sendKeys(productName);
         searchButton().click();
-        productLink().click();
     }
 }

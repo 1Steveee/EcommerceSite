@@ -59,9 +59,13 @@ public class RegisterPage {
         continueButton().click();
     }
 
-    public boolean isUserLoggedIn() {
+    public void moveToElement(WebElement element) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(myAccountLink()).pause(Duration.ofSeconds(2)).build().perform();
+        actions.moveToElement(element).pause(Duration.ofSeconds(2)).build().perform();
+    }
+
+    public boolean isUserLoggedIn() {
+        moveToElement(myAccountLink());
         boolean isLogoutButtonDisplayed = logoutButton().isDisplayed();
         driver.navigate().refresh();
         return isLogoutButtonDisplayed;

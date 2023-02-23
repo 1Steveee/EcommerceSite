@@ -45,10 +45,11 @@ public class SeleniumTest extends BaseTest {
 
     @Test(dependsOnMethods = "testUserRegistration")
     public void testAddProductToCart() {
-        this.mainPage.navigateToProductPage("iphone");
+        this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
         //Get value from search page and store it in a string called product
         //Get price value from search page and store it in a string price variable
-        // Create a product page
+
+        // Create a product page ... example navigateToProductPage
             //assert product page title == product title gathered in the previous step
             //assert product page price == price gathered in the previous step
             //create product page method to add product to cart by quantity
