@@ -23,6 +23,9 @@ public class SeleniumTest extends BaseTest {
     private String telephone;
     private String password;
     private MainPage mainPage;
+    private String productName;
+    private String productPrice;
+    private SearchPage searchPage;
 
     @BeforeClass
     public void setupTest() {
@@ -47,21 +50,28 @@ public class SeleniumTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testUserRegistration")
-    public void testAddProductToCart() {
-        SearchPage searchPage = this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
+    public void testSearchForCategoryAndProduct() {
+        this.searchPage = this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
         // use data provider to let user pick product
-        String productName = searchPage.getProductName();
-        String productPrice = searchPage.getProductPrice();
+        this.productName = searchPage.getProductName();
+        this.productPrice = searchPage.getProductPrice();
         assertEquals(productName, "iPhone");
         assertEquals(productPrice, "$123.20");
 
-        ProductPage productPage = searchPage.navigateToIphoneProductPage();
+    }
 
-        assertEquals(productName, productPage.getProductTitle());
-        assertEquals(productPrice, productPage.getProductPrice());
+    @Test(dependsOnMethods = "testSearchForCategoryAndProduct")
+    public void testAddProductToCart() {
+        ProductPage productPage = this.searchPage.navigateToIphoneProductPage();
+
+        assertEquals(this.productName, productPage.getProductTitle());
+        assertEquals(this.productPrice, productPage.getProductPrice());
 
         //create product page method to add product to cart by quantity
 
+        productPage.addProductToCart(5);
 
+        //assert success message
     }
+
 }
