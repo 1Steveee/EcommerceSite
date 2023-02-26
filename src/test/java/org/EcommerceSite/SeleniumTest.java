@@ -52,6 +52,7 @@ public class SeleniumTest extends BaseTest {
         //Get value from search page and store it in a string called product
         assertEquals(searchPage.getProductName(), "iPhone");
         assertEquals(searchPage.getProductPrice(), "$123.20");
+        //
 
 
         // Create a product page ... example navigateToProductPage
