@@ -2,6 +2,7 @@ package org.EcommerceSite;
 
 import com.github.javafaker.Faker;
 import org.EcommerceSite.pages.MainPage;
+import org.EcommerceSite.pages.ProductPage;
 import org.EcommerceSite.pages.RegisterPage;
 import org.EcommerceSite.pages.SearchPage;
 import org.openqa.selenium.WebDriver;
@@ -49,17 +50,17 @@ public class SeleniumTest extends BaseTest {
     public void testAddProductToCart() {
         SearchPage searchPage = this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
         // use data provider to let user pick product
-        //Get value from search page and store it in a string called product
-        assertEquals(searchPage.getProductName(), "iPhone");
-        assertEquals(searchPage.getProductPrice(), "$123.20");
-        //
+        String productName = searchPage.getProductName();
+        String productPrice = searchPage.getProductPrice();
+        assertEquals(productName, "iPhone");
+        assertEquals(productPrice, "$123.20");
 
+        ProductPage productPage = searchPage.navigateToIphoneProductPage();
 
-        // Create a product page ... example navigateToProductPage
-            //assert product page title == product title gathered in the previous step
-            //assert product page price == price gathered in the previous step
-            //create product page method to add product to cart by quantity
+        assertEquals(productName, productPage.getProductTitle());
+        assertEquals(productPrice, productPage.getProductPrice());
 
+        //create product page method to add product to cart by quantity
 
 
     }
