@@ -39,6 +39,7 @@ public class SeleniumTest extends BaseTest {
     public void testUserRegistration() {
         RegisterPage registerPage = new RegisterPage(driver);
         registerPage.registerAccount(this.firstName, this.lastName, this.email, this.telephone, this.password);
+        // Create a person or profile class
         assertEquals(registerPage.accountCreationSuccessMessage(), "Your Account Has Been Created!");
         assertTrue(registerPage.isUserLoggedIn());
     }
@@ -46,6 +47,7 @@ public class SeleniumTest extends BaseTest {
     @Test(dependsOnMethods = "testUserRegistration")
     public void testAddProductToCart() {
         this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
+        // use data provider to let user pick product
         //Get value from search page and store it in a string called product
         //Get price value from search page and store it in a string price variable
 
