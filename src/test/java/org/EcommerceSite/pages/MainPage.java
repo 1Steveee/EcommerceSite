@@ -56,9 +56,10 @@ public class MainPage {
         categoryItem(category).click();
     }
 
-    public void searchForCategoryAndProduct(String category,String productName) {
+    public SearchPage searchForCategoryAndProduct(String category,String productName) {
         selectCategory(category);
         productSearchField().sendKeys(productName);
         searchButton().click();
+        return new SearchPage(driver);
     }
 }
