@@ -28,8 +28,8 @@ public class ProductPage {
         return driver.findElement(By.cssSelector("h3.price-new"));
     }
 
-    private WebElement viewCartButton() {
-        return driver.findElement(By.linkText("View Cart"));
+    private WebElement checkOutButton() {
+        return driver.findElement(By.linkText("Checkout"));
     }
 
     public String getProductTitle() {
@@ -55,4 +55,8 @@ public class ProductPage {
         addToCartButton().click();
     }
 
+    public CheckOutPage checkOut() {
+        checkOutButton().click();
+        return new CheckOutPage(driver);
+    }
 }

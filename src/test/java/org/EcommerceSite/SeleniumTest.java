@@ -1,10 +1,7 @@
 package org.EcommerceSite;
 
 import com.github.javafaker.Faker;
-import org.EcommerceSite.pages.MainPage;
-import org.EcommerceSite.pages.ProductPage;
-import org.EcommerceSite.pages.RegisterPage;
-import org.EcommerceSite.pages.SearchPage;
+import org.EcommerceSite.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,11 +20,8 @@ public class SeleniumTest extends BaseTest {
     private String telephone;
     private String password;
     private MainPage mainPage;
-    private String searchPageProductName;
-    private String searchPageProductPrice;
     private SearchPage searchPage;
-    private String productPageProductName;
-    private String productPageProductPrice;
+    private ProductPage productPage;
 
     @BeforeClass
     public void setupTest() {
@@ -55,28 +49,31 @@ public class SeleniumTest extends BaseTest {
     public void testSearchForCategoryAndProduct() {
         this.searchPage = this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
         // use data provider to let user pick product
-        this.searchPageProductName = searchPage.getProductName();
-        this.searchPageProductPrice = searchPage.getProductPrice();
-        assertEquals(this.searchPageProductName, "iPhone");
-        assertEquals(this.searchPageProductPrice, "$123.20");
+        String searchPageProductName = searchPage.getProductName();
+        String searchPageProductPrice = searchPage.getProductPrice();
+        assertEquals(searchPageProductName, "iPhone");
+        assertEquals(searchPageProductPrice, "$123.20");
 
+        this.productPage = this.searchPage.navigateToIphoneProductPage();
+        assertEquals(searchPageProductName, productPage.getProductTitle());
+        assertEquals(searchPageProductPrice, productPage.getProductPrice());
     }
 
     @Test(dependsOnMethods = "testSearchForCategoryAndProduct")
     public void testAddProductToCart() {
-        ProductPage productPage = this.searchPage.navigateToIphoneProductPage();
-        this.productPageProductName = productPage.getProductTitle();
-        this.productPageProductPrice = productPage.getProductPrice();
-        assertEquals(this.searchPageProductName, this.productPageProductName);
-        assertEquals(this.searchPageProductPrice, this.productPageProductPrice);
-
         productPage.addProductToCart(5);
         assertEquals(productPage.addToCartSuccessMessage(), "Success: You have added\n" +
-                this.productPageProductName + "\n" +
+                this.productPage.getProductTitle() + "\n" +
                 "to your\n" +
                 "shopping cart\n" +
                 "!");
     }
 
+    @Test(dependsOnMethods = "testAddProductToCart")
+    public void testCheckoutProduct() {
+        CheckOutPage checkOutPage = this.productPage.checkOut();
+        assertEquals(checkOutPage.getProductName(), "iPhone");
+        //how do I pass it multiple values so the actual result is not hard coded
+    }
 
 }
