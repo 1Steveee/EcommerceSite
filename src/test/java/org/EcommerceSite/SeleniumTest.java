@@ -23,9 +23,11 @@ public class SeleniumTest extends BaseTest {
     private String telephone;
     private String password;
     private MainPage mainPage;
-    private String productName;
-    private String productPrice;
+    private String searchPageProductName;
+    private String searchPageProductPrice;
     private SearchPage searchPage;
+    private String productPageProductName;
+    private String productPageProductPrice;
 
     @BeforeClass
     public void setupTest() {
@@ -53,25 +55,28 @@ public class SeleniumTest extends BaseTest {
     public void testSearchForCategoryAndProduct() {
         this.searchPage = this.mainPage.searchForCategoryAndProduct("Phones & PDAs","iphone");
         // use data provider to let user pick product
-        this.productName = searchPage.getProductName();
-        this.productPrice = searchPage.getProductPrice();
-        assertEquals(productName, "iPhone");
-        assertEquals(productPrice, "$123.20");
+        this.searchPageProductName = searchPage.getProductName();
+        this.searchPageProductPrice = searchPage.getProductPrice();
+        assertEquals(this.searchPageProductName, "iPhone");
+        assertEquals(this.searchPageProductPrice, "$123.20");
 
     }
 
     @Test(dependsOnMethods = "testSearchForCategoryAndProduct")
     public void testAddProductToCart() {
         ProductPage productPage = this.searchPage.navigateToIphoneProductPage();
-
-        assertEquals(this.productName, productPage.getProductTitle());
-        assertEquals(this.productPrice, productPage.getProductPrice());
-
-        //create product page method to add product to cart by quantity
+        this.productPageProductName = productPage.getProductTitle();
+        this.productPageProductPrice = productPage.getProductPrice();
+        assertEquals(this.searchPageProductName, this.productPageProductName);
+        assertEquals(this.searchPageProductPrice, this.productPageProductPrice);
 
         productPage.addProductToCart(5);
-
-        //assert success message
+        assertEquals(productPage.addToCartSuccessMessage(), "Success: You have added\n" +
+                this.productPageProductName + "\n" +
+                "to your\n" +
+                "shopping cart\n" +
+                "!");
     }
+
 
 }

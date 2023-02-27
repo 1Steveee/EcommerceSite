@@ -28,8 +28,16 @@ public class ProductPage {
         return driver.findElement(By.cssSelector("h3.price-new"));
     }
 
+    private WebElement viewCartButton() {
+        return driver.findElement(By.linkText("View Cart"));
+    }
+
     public String getProductTitle() {
         return productTitle().getText();
+    }
+
+    public String addToCartSuccessMessage() {
+        return driver.findElement(By.cssSelector(".toast-body > div:nth-child(1) > p")).getText();
     }
 
     public String getProductPrice() {
@@ -46,4 +54,5 @@ public class ProductPage {
         addQuantity(5);
         addToCartButton().click();
     }
+
 }
