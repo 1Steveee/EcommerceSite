@@ -1,5 +1,6 @@
 package org.EcommerceSite;
 
+import org.EcommerceSite.Data.BillingUserData;
 import org.EcommerceSite.Data.RegisterUserData;
 import org.EcommerceSite.pages.*;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +8,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import static org.EcommerceSite.Data.RegisterUserDataBuilder.getRegisterUserData;
+import static org.EcommerceSite.Data.DataBuilder.getBillingUserData;
+import static org.EcommerceSite.Data.DataBuilder.getRegisterUserData;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -62,8 +64,14 @@ public class SeleniumTest extends BaseTest {
     @Test(dependsOnMethods = "testAddProductToCart")
     public void testCheckoutProduct() {
         CheckOutPage checkOutPage = this.productPage.checkOut();
+        BillingUserData billingUserData = getBillingUserData();
+
         assertEquals(checkOutPage.getProductName(), "iPhone");
+        assertEquals(checkOutPage.getCheckOutQuantity(), "5");
+        assertEquals(checkOutPage.getSubtotalPrice(), "$505.00");
+        assertEquals(checkOutPage.getTotalPrice(), "$624.00");
         //how do I pass it multiple values so the actual result is not hard coded
+        ConfirmOrderPage confirmOrderPage = checkOutPage.checkout(billingUserData);
     }
 
 }
