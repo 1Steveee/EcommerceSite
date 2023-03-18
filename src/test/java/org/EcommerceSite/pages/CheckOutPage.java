@@ -13,8 +13,28 @@ public class CheckOutPage {
         this.driver = driver;
     }
 
-    private WebElement getCheckoutFormField(String id) {
+    private WebElement getCheckoutFormFieldById(String id) {
         return driver.findElement(By.id(id));
+    }
+
+    private WebElement firstNameField(){
+        return driver.findElement(By.id("input-payment-firstname"));
+    }
+
+    private WebElement lastNameField() {
+        return driver.findElement(By.id("input-payment-lastname"));
+    }
+
+    private WebElement addressField() {
+        return driver.findElement(By.id("input-payment-address-1"));
+    }
+
+    private WebElement cityField() {
+        return driver.findElement(By.id("input-payment-city"));
+    }
+
+    private WebElement postCodeField() {
+        return driver.findElement(By.id("input-payment-postcode"));
     }
 
     private WebElement agreeToTermsCheckbox() {
@@ -26,18 +46,19 @@ public class CheckOutPage {
     }
 
     private Select countryField() {
-        return new Select(getCheckoutFormField("input-payment-country"));
+        return new Select(getCheckoutFormFieldById("input-payment-country"));
     }
 
     private Select stateField() {
-        return new Select(getCheckoutFormField("input-payment-zone"));
+        return new Select(getCheckoutFormFieldById("input-payment-zone"));
     }
     private void inputFormData(BillingUserData billingUserData) {
-        getCheckoutFormField("input-payment-firstname").sendKeys(billingUserData.getFirstName());
-        getCheckoutFormField("input-payment-lastname").sendKeys(billingUserData.getLastName());
-        getCheckoutFormField("input-payment-address-1").sendKeys(billingUserData.getStreetAddress());
-        getCheckoutFormField("input-payment-city").sendKeys(billingUserData.getCity());
-        getCheckoutFormField("input-payment-postcode").sendKeys(billingUserData.getPostalCode());
+        //separate each field
+        firstNameField().sendKeys(billingUserData.getFirstName());
+        lastNameField().sendKeys(billingUserData.getLastName());
+        addressField().sendKeys(billingUserData.getStreetAddress());
+        cityField().sendKeys(billingUserData.getCity());
+        postCodeField().sendKeys(billingUserData.getPostalCode());
         countryField().selectByVisibleText(billingUserData.getCountry());
         stateField().selectByVisibleText(billingUserData.getState());
 

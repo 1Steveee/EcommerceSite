@@ -70,8 +70,9 @@ public class SeleniumTest extends BaseTest {
         assertEquals(checkOutPage.getCheckOutQuantity(), "5");
         assertEquals(checkOutPage.getSubtotalPrice(), "$505.00");
         assertEquals(checkOutPage.getTotalPrice(), "$624.00");
-        //how do I pass it multiple values so the actual result is not hard coded
         ConfirmOrderPage confirmOrderPage = checkOutPage.checkout(billingUserData);
     }
+
+
 
 }
