@@ -19,6 +19,9 @@ public class SeleniumTest extends BaseTest {
     private MainPage mainPage;
     private SearchPage searchPage;
     private ProductPage productPage;
+    private ConfirmOrderPage confirmOrderPage;
+    private BillingUserData billingUserData;
+    private SuccessPage successPage;
     //Make Global Price and Global Search Value
 
     @BeforeClass
@@ -64,13 +67,30 @@ public class SeleniumTest extends BaseTest {
     @Test(dependsOnMethods = "testAddProductToCart")
     public void testCheckoutProduct() {
         CheckOutPage checkOutPage = this.productPage.checkOut();
-        BillingUserData billingUserData = getBillingUserData();
+        this.billingUserData = getBillingUserData();
 
         assertEquals(checkOutPage.getProductName(), "iPhone");
         assertEquals(checkOutPage.getCheckOutQuantity(), "5");
         assertEquals(checkOutPage.getSubtotalPrice(), "$505.00");
         assertEquals(checkOutPage.getTotalPrice(), "$624.00");
-        ConfirmOrderPage confirmOrderPage = checkOutPage.checkout(billingUserData);
+        this.confirmOrderPage = checkOutPage.checkout(this.billingUserData);
+    }
+
+    @Test(dependsOnMethods = "testCheckoutProduct")
+    public void testConfirmOrderPage() {
+        String shippingDataTemplate = String.format("%s %s\n%s\n%s, %s %s\n%s",
+                this.billingUserData.getFirstName(),this.billingUserData.getLastName(),
+                this.billingUserData.getStreetAddress(),this.billingUserData.getCity(),
+                this.billingUserData.getState(),this.billingUserData.getPostalCode(),
+                this.billingUserData.getCountry());
+        assertEquals(this.confirmOrderPage.getProductName(), "iPhone");
+        assertEquals(this.confirmOrderPage.getCheckOutQuantity(), "5");
+        assertEquals(this.confirmOrderPage.getSubtotalPrice(), "$505.00");
+        assertEquals(this.confirmOrderPage.getTotalPrice(), "$510.00");
+        assertEquals(this.confirmOrderPage.getPaymentAddress(), shippingDataTemplate);
+        assertEquals(this.confirmOrderPage.getShippingAddress(), shippingDataTemplate);
+
+        this.successPage = this.confirmOrderPage.confirmOrder();
     }
 
 

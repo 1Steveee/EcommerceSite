@@ -11,6 +11,7 @@
                     <include name="testSearchForCategoryAndProduct"/>
                     <include name="testAddProductToCart"/>
                     <include name="testCheckoutProduct"/>
+                    <include name="testConfirmOrderPage"/>
                 </methods>
             </class>
         </classes>
