@@ -21,7 +21,6 @@ public class SeleniumTest extends BaseTest {
     private ProductPage productPage;
     private ConfirmOrderPage confirmOrderPage;
     private BillingUserData billingUserData;
-    private SuccessPage successPage;
     //Make Global Price and Global Search Value
 
     @BeforeClass
@@ -90,13 +89,14 @@ public class SeleniumTest extends BaseTest {
         assertEquals(this.confirmOrderPage.getPaymentAddress(), shippingDataTemplate);
         assertEquals(this.confirmOrderPage.getShippingAddress(), shippingDataTemplate);
 
-        this.successPage = this.confirmOrderPage.confirmOrder();
+        this.confirmOrderPage.confirmOrder();
     }
 
     @Test(dependsOnMethods = "testConfirmOrderPage")
     public void testCompleteOrder() {
-        assertEquals(this.successPage.getSuccessHeaderMessage(), "Your order has been placed!");
-        assertEquals(this.successPage.getSuccessConfirmationMessage(), "Your order has been successfully processed!");
+        SuccessPage successPage = this.confirmOrderPage.confirmOrder();
+        assertEquals(successPage.getSuccessHeaderMessage(), "Your order has been placed!");
+        assertEquals(successPage.getSuccessConfirmationMessage(), "Your order has been successfully processed!");
     }
 
 

@@ -3,6 +3,7 @@ package org.EcommerceSite.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SuccessPage {
 
@@ -16,7 +17,7 @@ public class SuccessPage {
     }
 
     private WebElement successHeaderMessage() {
-        return driver.findElement(By.tagName("h1"));
+        return driver.findElement(By.cssSelector("#content > h1"));
     }
 
     public String getSuccessHeaderMessage() {
@@ -24,6 +25,6 @@ public class SuccessPage {
     }
 
     public String getSuccessConfirmationMessage() {
-        return successHeaderMessage().getText();
+        return successConfirmationMessage().getText();
     }
 }
