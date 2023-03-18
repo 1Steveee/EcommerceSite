@@ -93,6 +93,11 @@ public class SeleniumTest extends BaseTest {
         this.successPage = this.confirmOrderPage.confirmOrder();
     }
 
+    @Test(dependsOnMethods = "testConfirmOrderPage")
+    public void testCompleteOrder() {
+        assertEquals(this.successPage.getSuccessHeaderMessage(), "Your order has been placed!");
+        assertEquals(this.successPage.getSuccessConfirmationMessage(), "Your order has been successfully processed!");
+    }
 
 
 }

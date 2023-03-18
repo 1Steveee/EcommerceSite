@@ -56,12 +56,12 @@ public class ConfirmOrderPage {
     }
 
     public String getPaymentAddress() {
-        System.out.println(paymentAddress().getText());
+
         return paymentAddress().getText();
     }
 
     public String getShippingAddress() {
-        System.out.println(shippingAddress().getText());
+
         return shippingAddress().getText();
     }
 
