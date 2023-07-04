@@ -21,8 +21,28 @@ public class RegisterPage {
         return driver.findElement(By.cssSelector("#widget-navbar-217834 > ul > li:nth-child(6) > a"));
     }
 
-    private void sendKeys(String fieldId, String string) {
-        driver.findElement(By.cssSelector(fieldId)).sendKeys(string);
+    private WebElement passwordConfirmField() {
+        return driver.findElement(By.id("input-confirm"));
+    }
+
+    private WebElement firstNameField() {
+        return driver.findElement(By.id("input-firstname"));
+    }
+
+    private WebElement lastNameField() {
+        return driver.findElement(By.id("input-lastname"));
+    }
+
+    private WebElement passwordField() {
+        return driver.findElement(By.id("input-password"));
+    }
+
+    private WebElement telephoneField() {
+        return driver.findElement(By.id("input-telephone"));
+    }
+
+    private WebElement emailField() {
+        return driver.findElement(By.id("input-email"));
     }
 
     private WebElement agreeButton() {
@@ -45,12 +65,12 @@ public class RegisterPage {
         this.mainPage = new MainPage(driver);
         this.mainPage.clickRegisterAccount();
 
-        sendKeys("input#input-firstname", firstName);
-        sendKeys("input#input-lastname", lastName);
-        sendKeys("input#input-email", email);
-        sendKeys("input#input-telephone",telephone);
-        sendKeys("input#input-password",password);
-        sendKeys("input#input-confirm",password);
+        firstNameField().sendKeys(firstName);
+        lastNameField().sendKeys(lastName);
+        emailField().sendKeys(email);
+        telephoneField().sendKeys(telephone);
+        passwordField().sendKeys(password);
+        passwordConfirmField().sendKeys(password);
         agreeButton().click();
         continueButton().click();
     }

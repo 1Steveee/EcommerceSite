@@ -5,13 +5,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
+import static org.openqa.selenium.remote.Browser.*;
+
 public class DriverManager {
-
+    private final String HUB_URL = "http://localhost:4444/wd/hub";
     private WebDriver driver;
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -23,12 +28,50 @@ public class DriverManager {
             createFirefoxDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
             createEdgeDriver();
-        } else {
+        } else if(browser.equalsIgnoreCase("remote-chrome")) {
+            createRemoteChromeDriver();
+        } else if(browser.equalsIgnoreCase("remote-firefox")) {
+            createRemoteFireFoxDriver();
+        } else if(browser.equalsIgnoreCase("remote-edge")) {
+            createRemoteEdgeDriver();
+        }
+        else {
             System.out.println("Browser should either be chrome, edge, or firefox.");
         }
 
         setUpTimeOut();
         setUpFullScreen();
+    }
+
+    private void createRemoteChromeDriver() {
+        try {
+            DesiredCapabilities caps = new DesiredCapabilities ();
+            caps.setBrowserName ("chrome");
+            driver = new RemoteWebDriver(new URL(HUB_URL), caps);
+        } catch (final MalformedURLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    private void createRemoteEdgeDriver () {
+        try {
+            DesiredCapabilities caps = new DesiredCapabilities ();
+            caps.setBrowserName(EDGE.browserName());
+            caps.setVersion("114.0");
+            driver = new RemoteWebDriver (new URL (HUB_URL), caps);
+        } catch (final MalformedURLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    private void createRemoteFireFoxDriver () {
+        try {
+            DesiredCapabilities caps = new DesiredCapabilities ();
+            caps.setBrowserName (FIREFOX.browserName());
+            driver = new RemoteWebDriver (new URL (HUB_URL), caps);
+        } catch (final MalformedURLException e) {
+            System.out.println(e.toString());
+        }
     }
 
     private void createEdgeDriver() {

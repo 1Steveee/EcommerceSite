@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium E-Commerce Automation">
-    <test name = "E-commerce Test">
-        <parameter name="browser" value="chrome"/>
+<suite name="Selenium E-Commerce Automation" parallel="tests" thread-count="1">
+    <test name = "E-commerce Chrome Test">
+        <parameter name="browser" value="remote-chrome"/>
+        <classes>
+            <class name="org.EcommerceSite.SeleniumTest">
+                <methods>
+                    <include name="testUserRegistration"/>
+                    <include name="testAddProductToCart"/>
+                    <include name="testSearchForCategoryAndProduct"/>
+                    <include name="testAddProductToCart"/>
+                    <include name="testCheckoutProduct"/>
+                    <include name="testConfirmOrderPage"/>
+                    <include name="testCompleteOrder"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name = "E-commerce Edge test">
+        <parameter name="browser" value="remote-edge"/>
+        <classes>
+            <class name="org.EcommerceSite.SeleniumTest">
+                <methods>
+                    <include name="testUserRegistration"/>
+                    <include name="testAddProductToCart"/>
+                    <include name="testSearchForCategoryAndProduct"/>
+                    <include name="testAddProductToCart"/>
+                    <include name="testCheckoutProduct"/>
+                    <include name="testConfirmOrderPage"/>
+                    <include name="testCompleteOrder"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name = "E-commerce Firefox Test">
+        <parameter name="browser" value="remote-firefox"/>
         <classes>
             <class name="org.EcommerceSite.SeleniumTest">
                 <methods>
