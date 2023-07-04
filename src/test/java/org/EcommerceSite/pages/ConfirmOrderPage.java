@@ -3,12 +3,18 @@ package org.EcommerceSite.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ConfirmOrderPage {
+    private final WebDriverWait wait;
     private WebDriver driver;
 
     public ConfirmOrderPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(this.driver, Duration.ofSeconds (10));
     }
 
     private WebElement productName() {
@@ -27,7 +33,7 @@ public class ConfirmOrderPage {
     }
 
     private WebElement confirmOrderButton() {
-        return driver.findElement(By.cssSelector(".buttons > #button-confirm"));
+        return driver.findElement(By.id("button-confirm"));
     }
 
     private WebElement paymentAddress() {
@@ -36,6 +42,10 @@ public class ConfirmOrderPage {
 
     private WebElement shippingAddress() {
         return driver.findElement(By.cssSelector("#content > div > div:nth-child(2) > div > div"));
+    }
+
+    private WebElement successIcon() {
+        return driver.findElement(By.cssSelector("#content > h1 > i"));
     }
 
     public String getProductName() {
@@ -56,17 +66,16 @@ public class ConfirmOrderPage {
     }
 
     public String getPaymentAddress() {
-
         return paymentAddress().getText();
     }
 
     public String getShippingAddress() {
-
         return shippingAddress().getText();
     }
 
     public SuccessPage confirmOrder() {
         confirmOrderButton().click();
+        this.wait.until(ExpectedConditions.visibilityOf(successIcon()));
         return new SuccessPage(this.driver);
     }
 }

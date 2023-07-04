@@ -21,6 +21,7 @@ public class SuccessPage {
     }
 
     public String getSuccessHeaderMessage() {
+
         return successHeaderMessage().getText();
     }
 

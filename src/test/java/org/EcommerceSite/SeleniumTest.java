@@ -72,6 +72,7 @@ public class SeleniumTest extends BaseTest {
         assertEquals(checkOutPage.getCheckOutQuantity(), "5");
         assertEquals(checkOutPage.getSubtotalPrice(), "$505.00");
         assertEquals(checkOutPage.getTotalPrice(), "$624.00");
+
         this.confirmOrderPage = checkOutPage.checkout(this.billingUserData);
     }
 
@@ -82,21 +83,21 @@ public class SeleniumTest extends BaseTest {
                 this.billingUserData.getStreetAddress(),this.billingUserData.getCity(),
                 this.billingUserData.getState(),this.billingUserData.getPostalCode(),
                 this.billingUserData.getCountry());
-        assertEquals(this.confirmOrderPage.getProductName(), "iPhone");
-        assertEquals(this.confirmOrderPage.getCheckOutQuantity(), "5");
-        assertEquals(this.confirmOrderPage.getSubtotalPrice(), "$505.00");
-        assertEquals(this.confirmOrderPage.getTotalPrice(), "$510.00");
-        assertEquals(this.confirmOrderPage.getPaymentAddress(), shippingDataTemplate);
-        assertEquals(this.confirmOrderPage.getShippingAddress(), shippingDataTemplate);
 
-        this.confirmOrderPage.confirmOrder();
+        assertEquals("iPhone", this.confirmOrderPage.getProductName());
+        assertEquals("5", this.confirmOrderPage.getCheckOutQuantity());
+        assertEquals("$505.00", this.confirmOrderPage.getSubtotalPrice());
+        assertEquals("$510.00", this.confirmOrderPage.getTotalPrice());
+        assertEquals(shippingDataTemplate, this.confirmOrderPage.getPaymentAddress());
+        assertEquals(shippingDataTemplate, this.confirmOrderPage.getShippingAddress());
+
     }
 
     @Test(dependsOnMethods = "testConfirmOrderPage")
     public void testCompleteOrder() {
         SuccessPage successPage = this.confirmOrderPage.confirmOrder();
-        assertEquals(successPage.getSuccessHeaderMessage(), "Your order has been placed!");
-        assertEquals(successPage.getSuccessConfirmationMessage(), "Your order has been successfully processed!");
+        assertEquals("Your order has been placed!", successPage.getSuccessHeaderMessage());
+        assertEquals( "Your order has been successfully processed!",successPage.getSuccessConfirmationMessage());
     }
 
 

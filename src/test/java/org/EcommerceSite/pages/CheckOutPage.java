@@ -4,13 +4,19 @@ import org.EcommerceSite.Data.BillingUserData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CheckOutPage {
 
+    private final WebDriverWait wait;
     private WebDriver driver;
     public CheckOutPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait (this.driver, Duration.ofSeconds (10));
     }
 
     private WebElement getCheckoutFormFieldById(String id) {
@@ -42,7 +48,7 @@ public class CheckOutPage {
     }
 
     private WebElement continueButton() {
-        return driver.findElement(By.id("button-save"));
+        return this.wait.until(ExpectedConditions.elementToBeClickable(By.id("button-save")));
     }
 
     private Select countryField() {
